@@ -1,0 +1,118 @@
+<% layout("/layouts/boilerplate.ejs") %>
+    <%= success %>
+        <style>
+            #filters {
+                padding: 1rem;
+                display: flex;
+                align-items: center;
+                gap: 2vw;
+            }
+
+            .filter {
+                text-align: center;
+                opacity: 0.7;
+            }
+
+            .filter:hover {
+                opacity: 1;
+                cursor: pointer;
+
+            }
+
+            .filter p {
+                font-size: 1rem;
+            }
+
+            .tax-info {
+                display: none;
+
+            }
+
+            .tax-toggle {
+                border: 1px solid black;
+                border-radius: 1rem;
+                padding: 1rem;
+                height: 3.2rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-left: 1rem;
+
+            }
+        </style>
+        <!-- <h2>All Listings</h2> -->
+
+        <div id="filters">
+            <div class="filter">
+                <div><i class="fa-solid fa-fire"></i></div>
+                <p>Trending</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-bed"></i></div>
+                <p>rooms</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-money-bill-wheat"></i></div>
+                <p>farms</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-city"></i></div>
+                <p>Modern cities</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-person-swimming"></i></div>
+                <p>Amazing pools</p>
+            </div>
+            <div class="filter">
+                <div><i class="fa-solid fa-print"></i></div>
+                <p>Cabins</p>
+            </div>
+          
+
+            <div class="tax-toggle">
+                <div class="form-check-reverse form-switch ">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"
+                        style="cursor: pointer;">
+                    <label class="form-check-label" for="flexSwitchCheckDefault" style="cursor: pointer;">Display after
+                        taxes</label>
+                </div>
+            </div>
+        </div>
+        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-small-2">
+            <% for(let listing of allListings) {%>
+                <a href="/listings/<%= listing._id %>" class="listing-link">
+                    <div class="card col listing-card">
+                        <img src="<%= listing.image.url %>" class="card-img-top" alt="listing image"
+                            style="height: 20rem">
+                        <div class="card-img-overlay"></div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <b>
+                                    <%= listing.title %>
+                                </b> <br>
+                                &#8377;<%= listing.price.toLocaleString("en-IN") %>/night &nbsp;<b class="tax-info"><i>
+                                            +18% GST </i></b>
+
+
+
+                            </p>
+                        </div>
+
+                    </div>
+                </a>
+                <% } %>
+        </div>
+
+        <script>
+            let taxSwitch = document.getElementById("flexSwitchCheckDefault");
+            taxSwitch.addEventListener("click", () => {
+                let taxInfo = document.getElementsByClassName("tax-info")
+                for (info of taxInfo) {
+                    if (info.style.display !== "inline") {
+                        info.style.display = "inline"
+                    } else {
+                        info.style.display = "none"
+                    };
+                };
+            });
+        </script>
